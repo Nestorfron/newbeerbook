@@ -6,7 +6,7 @@ from backend.routes import api_blueprint
 from backend.config import Config
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
-from backend.models import Item  # Asegúrate de tener el modelo definido en models.py
+from backend.models import User, Brewery, Bar, Beer, Event, EventBar, BarAddedBeer, Review
 from dotenv import load_dotenv
 from sqlalchemy import text
 import os
@@ -41,8 +41,15 @@ def create_app():
     app.register_blueprint(api_blueprint, url_prefix='/api')
 
     # Configurar Flask-Admin
-    admin = Admin(app, name='Admin Panel', template_mode='bootstrap3')
-    admin.add_view(ModelView(Item, db.session))  # Agrega el modelo Item al panel de administración
+    admin = Admin(app, name='Admin Panel', template_mode='bootstrap3') 
+    admin.add_view(ModelView(User, db.session))
+    admin.add_view(ModelView(Brewery, db.session))
+    admin.add_view(ModelView(Bar, db.session))
+    admin.add_view(ModelView(Beer, db.session))
+    admin.add_view(ModelView(Event, db.session))
+    admin.add_view(ModelView(EventBar, db.session))
+    admin.add_view(ModelView(BarAddedBeer, db.session))
+    admin.add_view(ModelView(Review, db.session))
 
     # Ruta para el frontend
     @app.route('/')
